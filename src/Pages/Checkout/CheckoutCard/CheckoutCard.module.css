@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.inter-100 {
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+    padding: 5px;
+    transition: box-shadow 0.3s ease;
+    width: 100%;
+    height: 120px;
+
+}
+
+.cardtitle {
+    font-size: 1.2em;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+    font-weight: thin;
+}
+
+.cardcontent {
+    font-size: 1em;
+    color: #333;
+}
+
+.innerdiv {
+   width: 100%;
+   margin-left: 10px;
+}
+
+.cardimg {
+    width:80px;
+    height: 80px;
+    margin: 0;
+}
+.outerdiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+.pricetext {
+    font-size: 1.2em;
+    color: #333;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: bolder;
+}
+
+.pricebutton
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}

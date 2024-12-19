@@ -1,0 +1,69 @@
+.offcanvasbody{
+    scrollbar-width: none;
+}
+
+.outerdiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+.shop {
+    font-size: 1.2em;
+
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: bolder;
+}
+.spacer
+{
+    width: 100%;
+}
+.logo 
+{
+    height: 40px;
+
+}
+
+.cartbutton
+{
+    min-width: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+}
+
+.loginbutton
+{
+    min-width: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.loginbutton:hover
+{
+    text-decoration: underline;
+}
+
+.navcontainer
+{
+    margin: 10px;
+    display: flex ;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.navcontainer a:hover
+{
+    text-decoration: underline;
+}
+
+.checkoutbutton
+{
+    width: 80%;
+    margin: 10px;
+}

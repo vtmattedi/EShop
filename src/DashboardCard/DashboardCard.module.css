@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300');
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin: 16px;
+    transition: box-shadow 0.3s ease;
+    width: 20vw;
+    height: 40vh;
+
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgb(255, 255, 255);
+    transform: translateY(-4px);
+    transition: box-shadow 0.5s ease;
+    cursor: pointer;
+
+}
+
+.cardtitle {
+    font-size: 1.2em;
+    color: #333;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: bolder;
+}
+
+.cardcontent {
+    font-size: 1em;
+    color: #333;
+}
+
+.cardimg {
+    width: 10vw;
+    height: 15vw;
+    border-radius: 8px;
+}
