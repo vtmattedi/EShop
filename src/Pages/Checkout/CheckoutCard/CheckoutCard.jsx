@@ -19,7 +19,7 @@ const test = {
 }
 
 const CheckoutCard = ({ item }) => {
-    const {addToCart, cart, addAlert} = useGlobalContext();
+    const {removeFromCart} = useGlobalContext();
     const maxTitle = (title) =>{
         if(title.length > 23){
           return title.slice(0,20) + '...'

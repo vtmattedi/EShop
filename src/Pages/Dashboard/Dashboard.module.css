@@ -1,0 +1,13 @@
+.outterdiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    height: 80vh;
+    width: 100%;
+    border: 1px solid #0f0;
+    padding: 10px;
+    overflow-y: scroll;
+}

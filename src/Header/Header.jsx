@@ -8,6 +8,7 @@ import CartCard from '../CartCard/CartCard';
 import styles from './Header.module.css';
 import logo from '../assets/logo-inverted.png';
 import LoginForm from '../LoginForm/LoginForm';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const [show, setShow] = useState(false);
@@ -20,6 +21,8 @@ const Header = () => {
     const [openLogin, setOpenLogin] = useState(false);
     const closeLogin = () => {setOpenLogin(false)};
 
+    const navigator = useNavigate();
+
     const getUserName = () => {
         if (user) {
             user.name.firstname = user.name.firstname.charAt(0).toUpperCase() + user.name.firstname.slice(1);
@@ -30,8 +33,6 @@ const Header = () => {
     }
  
     useEffect(() => {
-        if (cart.length > 0)
-            setShow(true);
         setTotal(cart.reduce((acc, item) => acc + item.price, 0));
     }, [cart])
 
@@ -83,7 +84,9 @@ const Header = () => {
                 {
                     total > 0 &&
                     <div className='d-flex justify-content-center'>
-                        <Button variant="secondary" className={styles.checkoutbutton} >Go to Check Out{`  $${total.toFixed(2)}`} </Button>
+                        <Button variant="secondary" 
+                        onClick={() => { navigator("/checkout") }}
+                        className={styles.checkoutbutton} >Go to Check Out{`  $${total.toFixed(2)}`} </Button>
                     </div>
                 }
             </Offcanvas>

@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import styles from "./DashboardCard.module.css"
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useGlobalContext } from '../GlobalContext';
+import { useGlobalContext } from '../../../GlobalContext';
 
 const test = {
     "id": 2,

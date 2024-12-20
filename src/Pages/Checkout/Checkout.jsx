@@ -3,12 +3,12 @@ import { Alert, Button, NavLink, Spinner } from 'react-bootstrap';
 import { useState } from 'react';
 import { useGlobalContext } from '../../GlobalContext';
 import CheckoutCard from './CheckoutCard/CheckoutCard';
-import { use } from 'react';
 import { useAxios, calcFrete, calcETD } from '../../axiosHook';
 import styles from './Checkout.module.css';
 import LoadIndicator from '../../Loadindicator';
+import Header from '../../Header/Header';
 const Checkout = () => {
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(0);
     const { cart, setCart, user, addAlert } = useGlobalContext();
     const [total, setTotal] = useState(0);
     const [shipping, setShipping] = useState(0);
@@ -216,7 +216,8 @@ const Checkout = () => {
 
     }, [region]);
 
-    return (
+    return (<>
+        <Header />
         <div className={styles.outerdiv}>
             <div>
                 <NavLink
@@ -268,7 +269,7 @@ const Checkout = () => {
                                     </Alert>
                             }
                         </div>
-                        <div  className={styles.totaldiv}>
+                        <div className={styles.totaldiv}>
                             <p className={styles.totalname}>
                                 Total:
                             </p>
@@ -352,7 +353,7 @@ const Checkout = () => {
                             ))}
                         </div>
 
-                        <div  className={styles.totaldiv}>
+                        <div className={styles.totaldiv}>
                             <p className={styles.totalname}>
                                 Total:
                             </p>
@@ -386,6 +387,7 @@ const Checkout = () => {
                 }
             </Button>
         </div>
+    </>
     );
 };
 
