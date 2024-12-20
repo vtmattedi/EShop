@@ -1,0 +1,25 @@
+.outerdiv {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+}
+
+.logo {
+    height: 15vw;
+    margin: auto;
+}
+
+.text {
+    font-size: 1.5em;
+    max-width: 60vw;
+    text-align: center;
+}
+
+.check{
+    font-size: 4em;
+    color: green;
+}

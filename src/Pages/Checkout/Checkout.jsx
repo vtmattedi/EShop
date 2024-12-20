@@ -7,9 +7,11 @@ import { useAxios, calcFrete, calcETD } from '../../axiosHook';
 import styles from './Checkout.module.css';
 import LoadIndicator from '../../Loadindicator';
 import Header from '../../Header/Header';
+import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 const Checkout = () => {
     const [step, setStep] = useState(0);
-    const { cart, setCart, user, addAlert } = useGlobalContext();
+    const { cart, clearCart, user, addAlert } = useGlobalContext();
     const [total, setTotal] = useState(0);
     const [shipping, setShipping] = useState(0);
     const [zip, setZip] = useState('');
@@ -18,9 +20,10 @@ const Checkout = () => {
     const [address, setAddress] = useState({});
     const [shipment, setShipment] = useState([]);
     const [enableNext, setEnableNext] = useState(true);
+    const [processingPayment, setProcessPayment] = useState(false);
     const steps = ['Review Order', 'Delivery Address', 'Shipping', 'Payment'];
     const axios = useAxios();
-
+    const navigator = useNavigate();
     const handleZipCode = (e) => {
         const enable_dot = false;
         const write_index = e.target.selectionStart === e.target.selectionEnd ? e.target.selectionStart : -1;
@@ -141,6 +144,7 @@ const Checkout = () => {
 
     }
     useEffect(() => {
+        console.log(step);
         if (step === 2)
             setShipping(0);
         if (step === 0 && cart.length > 0)
@@ -148,13 +152,9 @@ const Checkout = () => {
         else
             setEnableNext(false);
 
-        if (step === steps.length - 1) {
-            setTimeout(() => { setEnableNext(true) }, 1500);
-        }
-
-
+        console.log(step);
         if (step === steps.length) {
-            setCart([]);
+            clearCart();
             //go to Thank you page
         }
     }, [step]);
@@ -220,7 +220,7 @@ const Checkout = () => {
         <Header />
         <div className={styles.outerdiv}>
             <div>
-                <NavLink
+                <div
                     className={styles.navcontainer}>
                     {
                         steps.map((step_name, i) => {
@@ -240,7 +240,7 @@ const Checkout = () => {
                         })
                     }
 
-                </NavLink>
+                </div>
                 {
                     step == 0 &&
 
@@ -269,14 +269,6 @@ const Checkout = () => {
                                     </Alert>
                             }
                         </div>
-                        <div className={styles.totaldiv}>
-                            <p className={styles.totalname}>
-                                Total:
-                            </p>
-                            <p className={styles.totalval}>
-                                ${total.toFixed(2)}
-                            </p>
-                        </div>
                     </div>
                 }
                 {
@@ -302,6 +294,7 @@ const Checkout = () => {
                         <div className={styles.zipdiv}>
                             <input type='text' placeholder='Zip Code'
                                 onKeyDown={handleZipCode}
+                                onChange={()=>{}}
                                 value={zip}
                                 style={{ textAlign: 'center' }} />
                             <Button
@@ -315,7 +308,9 @@ const Checkout = () => {
                                             Search
                                             <div className='bi bi-search'></div>
                                         </div> :
-                                        LoadIndicator(styles.loading)
+                                        <div className={styles.findinner}>
+                                            {LoadIndicator(styles.loading)}
+                                        </div>
                                 }
                             </Button>
                         </div>
@@ -345,7 +340,7 @@ const Checkout = () => {
                                                 setEnableNext(true);
                                             }}
                                         />
-                                        <p>{option.service}</p>
+                                        <p className={styles.shipmentservice}>{option.service}</p>
                                     </div>
                                     <p>${option.price.toFixed(2)}</p>
                                     <p>{option.etd} {option.etd > 1 ? " days" : "day"}</p>
@@ -353,14 +348,7 @@ const Checkout = () => {
                             ))}
                         </div>
 
-                        <div className={styles.totaldiv}>
-                            <p className={styles.totalname}>
-                                Total:
-                            </p>
-                            <p className={styles.totalval}>
-                                ${(total + shipping).toFixed(2)}
-                            </p>
-                        </div>
+
                     </div>
                 }
                 {
@@ -368,25 +356,91 @@ const Checkout = () => {
                     <div>
                         <div className="bi bi-credit-card" style={{ fontSize: "5em" }}></div>
 
-                        <p>Payment</p>
+                        <p>Please Select the Payment Method</p>
+                        <div className={styles.paymentcontainer}>
+                            <Form>
+                                <div className={styles.paymentoption}>
+                                    <Form.Check // prettier-ignore
+                                        type="radio"
+                                        name="group1"
+                                        id="card_credit"
+                                        onClick={() => { setEnableNext(true) }}
+                                    />
+                                    <p>Credit Card</p>
+                                </div>
+                                <div className={styles.paymentoption}>
+                                    <Form.Check // prettier-ignore
+                                        type="radio"
+                                        id="card_debit"
+                                        name="group1"
+                                        onClick={() => { setEnableNext(true) }}
+                                    />
+                                    <p>Debit Card</p>
+                                </div>
+                                <div className={styles.paymentoption}>
+                                    <Form.Check
+                                        type="radio"
+                                        name="group1"
+                                        id="wire"
+                                        onClick={() => { setEnableNext(true) }}
+                                    />
+                                    <p>Wire</p>
+                                </div>
 
-                        <div>
-                            Total: ${(total + shipping).toFixed(2)}
+                                <div className={styles.paymentoption}>
+                                    <Form.Check
+                                        type="radio"
+                                        name="group1"
+                                        id="bitcoin"
+                                        onClick={() => { setEnableNext(true) }}
+                                    />
+                                    <p>Bitcoin</p>
+                                </div>
+                            </Form>
                         </div>
+
                     </div>
                 }
             </div>
-            <Button onClick={() => { setStep((prev) => prev + 1); }}
-                className={`${styles.nextbutton} ${step < steps.length - 1 ? '' : styles.lastbutton}`}
-                disabled={!enableNext}
-            >
+            <div className={styles.bottomdiv}>
                 {
-                    step < steps.length - 1 ?
-                        <div className={styles.buttontext}> Next <div className='bi bi-arrow-right'></div></div> :
-                        <div className={styles.buttontext}>Pay</div>
+                    (step === 0 || step >= 2) &&
+                    <div className={styles.totaldiv}>
+                        <p className={styles.totalname}>
+                            Total:
+                        </p>
+                        <p className={styles.totalval}>
+                            ${(step === 0 ? total : total + shipping).toFixed(2)}
+                        </p>
+                    </div>
                 }
-            </Button>
-        </div>
+                <Button onClick={() => {
+                    if (step < steps.length - 1)
+                        setStep((prev) => prev + 1);
+                    else {
+                        setProcessPayment(true);
+                        setTimeout(() => {
+                            navigator('/thankyou');
+                            clearCart();
+                            setProcessPayment(false);
+                        }, 1500);
+                    }
+                }}
+                    className={`${styles.nextbutton} ${step < steps.length - 1 ? '' : styles.lastbutton}`}
+                    disabled={!enableNext}
+                >
+                    {
+                        step < steps.length - 1 ?
+                            <div className={styles.buttontext}> Next <div className='bi bi-arrow-right'></div></div> :
+                            processingPayment ?
+                                <div className={styles.buttontext}>{LoadIndicator()} </div> :
+                                <div className={styles.buttontext}> Pay </div>
+
+
+                    }
+                </Button>
+            </div >
+        </div >
     </>
     );
 };

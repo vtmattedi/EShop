@@ -7,31 +7,67 @@
     flex-direction: row;
     align-items: center;
     padding: 5px;
+    width: 90%;
+    margin: auto;
 }
 .shop {
     font-size: 1.2em;
-
     font-family: 'Comfortaa', sans-serif;
-    font-weight: bolder;
+    font-weight: bold;
+    text-align: center;
+    margin: auto;
 }
 .spacer
 {
     width: 100%;
 }
-.logo 
-{
-    height: 40px;
-
-}
-
-.cartbutton
-{
-    min-width: 80px;
+.spacerinner{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: 1.5em;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.spacerinner_two{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+}
+.logo 
+{
+    height: 40px;
+}
+
+.cartcontainer
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    align-content: center;
+    justify-content: center;
+}
+.carttext{
+    margin:auto;
+}
+.cartbutton
+{
+    min-width: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
 }
 
 .loginbutton

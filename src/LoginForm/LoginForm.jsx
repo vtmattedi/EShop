@@ -5,6 +5,7 @@ import { useGlobalContext } from '../GlobalContext';
 import profile from '../assets/noprofile.svg';
 import logo from '../assets/logo-inverted.png';
 import LoadIndicator from '../Loadindicator';
+import styles from './LoginForm.module.css';
 
 const LoginForm = ({ visibile, handleClose }) => {
     const [username, setUsername] = useState('');
@@ -12,8 +13,8 @@ const LoginForm = ({ visibile, handleClose }) => {
     const [loading, setLoading] = useState(false);
     const [userList, setUserList] = useState([]);
     const axios = useAxios();
-    const { user, setUser } = useGlobalContext();
-   
+    const { user, setUser, addAlert } = useGlobalContext();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission logic here
@@ -27,6 +28,9 @@ const LoginForm = ({ visibile, handleClose }) => {
             if (_user) {
                 setUser(_user);
                 handleClose();
+            }
+            else {
+                addAlert({ text: "Invalid username or password", title: "Login Failed" });
             }
             setLoading(false);
         }, 1500);
@@ -68,14 +72,11 @@ const LoginForm = ({ visibile, handleClose }) => {
         axios.get('https://fakestoreapi.com/users')
             .then((response) => {
                 setUserList(response.data);
-                console.log(response.data);
             })
     }, []);
     useEffect(() => {
-
         setUsername('');
         setPassword('');
-        console.log(visibile);
     }, [visibile]);
 
     return (
@@ -84,10 +85,10 @@ const LoginForm = ({ visibile, handleClose }) => {
             onHide={handleClose}
             data-bs-theme="dark">
             {!user &&
-                <>
-                    <img src={logo} alt='MattediWorks Logo' className='logo' />
-                    <form onSubmit={handleSubmit}>
-                        <div>
+                <div className={styles.loginouter}>
+                    <img src={logo} alt='MattediWorks Logo' className={styles.logo} />
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        <div className={styles.userdiv}>
                             <label htmlFor="username">User:</label>
                             <input
                                 id="username"
@@ -96,7 +97,7 @@ const LoginForm = ({ visibile, handleClose }) => {
                                 required
                             />
                         </div>
-                        <div>
+                        <div className={styles.userdiv}>
                             <label htmlFor="password">Password:</label>
                             <input
                                 type="password"
@@ -106,31 +107,53 @@ const LoginForm = ({ visibile, handleClose }) => {
                                 required
                             />
                         </div>
-                        <select class="form-select" aria-label="Default select example" onChange={(e) => setSelected(e.target.value)}>
-                            <option selected>Available Users</option>
-                            {userList.map((user) => {
-                                {
-                                    return (
-                                        <option value={user.id} >{"" + getFullUserName(user)}</option>
-                                    )
+                        <div className={styles.selectdiv}>
+                            <select className="form-select" aria-label="Default select example" onChange={(e) => setSelected(e.target.value)}
+                            >
+                                <option selected>Available Users</option>
+                                {userList.map((user) => {
+                                    {
+                                        return (
+                                            <option value={user.id} key={user.id}>{"" + getFullUserName(user)}</option>
+                                        )
+                                    }
+                                })
                                 }
-                            })
-                            }
 
-                        </select>
+                            </select>
+                        </div>
                         <Button type="submit"
-                            disabled={loading}>{loading ? LoadIndicator() : "Login"}</Button>
+                            className={styles.loginbutton}
+                            disabled={loading}>
+                            <div className={styles.insidebutton}>
+                                {
+                                    loading ? LoadIndicator() : "Login"
+                                    }
+                                    </div>
+                        </Button>
                     </form>
-                </>
+                </div>
             }
             {
                 user &&
-                <div>
-                    <p>Welcome {getFullUserName(user)}</p>
-                    <img src={profile} alt="User Avatar" />
-                    <p>Username: {user.username}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Phone: {user.phone}</p>
+                <div className={styles.userinfo}>
+                    <p className={styles.username}>Welcome, {getFullUserName(user)}</p>
+                    <img src={profile} alt="User Avatar" className={styles.userimg} />
+
+                    <div className={styles.userinfocontainer}>
+                        <p className={styles.uservar}>Username:</p>
+                        <p className={styles.userval}>{user.username}</p>
+                    </div>
+                    <div className={styles.userinfocontainer}>
+                        <p className={styles.uservar}>Phone:</p>
+                        <p className={styles.userval}>{user.phone}</p>
+                    </div>
+                    <div className={styles.userinfocontainer}>
+                        <p className={styles.uservar}>Email: </p>
+                        <p className={styles.userval}>{user.email}</p>
+                    </div>
+
+
 
                     <Button onClick={() => {
                         setLoading(true);
@@ -139,14 +162,21 @@ const LoginForm = ({ visibile, handleClose }) => {
                             setLoading(false);
                         }, 1500);
                     }}
+                        className={styles.logoutbutton}
                         disabled={loading}
-                        variant='danger'>{loading ? LoadIndicator() : "Logout"}</Button>
+                        variant='danger'>
+                        <div className={styles.insidebutton}>
 
+                            {loading ? LoadIndicator() : "Logout"}
 
+                        </div>
+                    </Button>
                 </div>
             }
-            <Button variant="secondary" onClick={handleClose} >Close</Button>
-        </Modal>
+            <Button variant="secondary"
+                className={styles.closebutton}
+                onClick={handleClose} >Close</Button>
+        </Modal >
 
     );
 };

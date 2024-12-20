@@ -15,11 +15,11 @@ const Header = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
+
     const { user, cart } = useGlobalContext();
     const [total, setTotal] = useState(0);
     const [openLogin, setOpenLogin] = useState(false);
-    const closeLogin = () => {setOpenLogin(false)};
+    const closeLogin = () => { setOpenLogin(false) };
 
     const navigator = useNavigate();
 
@@ -31,29 +31,41 @@ const Header = () => {
         }
         return "Login";
     }
- 
+
     useEffect(() => {
         setTotal(cart.reduce((acc, item) => acc + item.price, 0));
     }, [cart])
 
     return (
         <div className={styles.outerdiv} >
-            <img src={logo} alt='MattediWorks Logo' className={styles.logo} />
-            <p className={styles.shop}> MattediWorks E-Shop</p>
+            {/* <img src={logo} alt='MattediWorks Logo' className={styles.logo} /> */}
             <div className={styles.navcontainer}>
-                <NavLink href='/'><div className='bi bi-house'></div>Home</NavLink>
-                <NavLink href='/products'><div className='bi bi-shop'></div>Products</NavLink>
-                <NavLink ></NavLink>
+                <NavLink onClick={() => { navigator("/") }}><div className='bi bi-house'></div>Home</NavLink>
+                <NavLink onClick={() => { navigator("/checkout") }} ><div className='bi bi-bag-check'></div>Checkout</NavLink>
+                <NavLink onClick={() => { navigator("/about") }} ><div className='bi bi-info-circle'></div>About</NavLink>
+
             </div>
-            <div className={styles.spacer}></div>
+            <div className={styles.spacer}>
+                <div className={styles.spacerinner}>
+                    <img src={logo} alt='MattediWorks Logo' className={styles.logo} />
+                    <div className={styles.spacerinner_two}>
+                        <p className={styles.shop}> MattediWorks E-Shop</p>
+                    </div>
+
+                </div>
+
+
+            </div>
             <div >
                 <Button variant="outline" className={styles.loginbutton}
-                onClick={() => setOpenLogin(true)}
+                    onClick={() => setOpenLogin(true)}
                 >{"" + getUserName()}</Button>
             </div>
             <div className={styles.cartcontainer}>
                 <Button variant="primary" onClick={handleShow} className={styles.cartbutton}>
-                    <div className={'bi bi-cart4 '}></div><p className={styles.carttext}>{cart.length === 0 ? "" : cart.length}</p>
+                    <div className={styles.cartcontainer}>
+                        <div className={'bi bi-cart4 '}></div><p className={styles.carttext}>{cart.length === 0 ? "" : cart.length}</p>
+                    </div>
                 </Button>
             </div>
             <LoginForm visibile={openLogin} handleClose={closeLogin}></LoginForm>
@@ -84,9 +96,9 @@ const Header = () => {
                 {
                     total > 0 &&
                     <div className='d-flex justify-content-center'>
-                        <Button variant="secondary" 
-                        onClick={() => { navigator("/checkout") }}
-                        className={styles.checkoutbutton} >Go to Check Out{`  $${total.toFixed(2)}`} </Button>
+                        <Button variant="secondary"
+                            onClick={() => { navigator("/checkout") }}
+                            className={styles.checkoutbutton} >Go to Check Out{`  $${total.toFixed(2)}`} </Button>
                     </div>
                 }
             </Offcanvas>

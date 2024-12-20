@@ -21,6 +21,7 @@ const test = {
 const CheckoutCard = ({ item }) => {
     const {removeFromCart} = useGlobalContext();
     const maxTitle = (title) =>{
+        if (!title) return ""
         if(title.length > 23){
           return title.slice(0,20) + '...'
         }

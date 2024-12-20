@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import styles from "./DashboardCard.module.css"
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useGlobalContext } from '../../../GlobalContext';
-
+import { useNavigate } from 'react-router-dom';
 const test = {
     "id": 2,
     "title": "Mens Casual Premium Slim Fit T-Shirts ",
@@ -26,10 +26,11 @@ const DashboardCard = ({ item }) => {
         }
         return title
       }
+      const navigator = useNavigate();
  
     return (
         <Card className={styles.card} onClick={() => {
-            addToCart(item);
+            navigator('/product/' + item.id);
         }}>
             <Card.Img variant="top" src={item.image} className={styles.cardimg}/>
             <Card.Body className={styles.cardbody}>

@@ -3,11 +3,10 @@ const LoadIndicator = (className) => {
     return (
         <div style={
             {
-                width: '100%',
                 height: '100%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyItems: 'center'
+                justifyItems: 'center',
             }
         }>
             <OrbitProgress color="lightgreen" text="" textColor="" style={{

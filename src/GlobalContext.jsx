@@ -33,16 +33,37 @@ export const GlobalProvider = ({ children }) => {
     const [showAlert, setShowAlert] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
     const [cart, setCart] = useState([]);
-    const [user, setUser] = useState(user_demo);
+    const [user, prsetUser] = useState(null);
     const cartUID = React.useRef(0);
 
+    const clearCart = () => {
+        const new_cart = [];
+        localStorage.setItem('cart', JSON.stringify(new_cart));
+        setCart(new_cart);
+    }
+
+    const setUser = (user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        prsetUser(user);
+    }
+
     const addToCart = (item) => {
+        if (!item) return
+        if (item.id === undefined) return
+        if (item.title === undefined) return
+        if (item.price === undefined) return
+        if (item.image === undefined) return
         item = { ...item, uid: cartUID.current++ };
-        setCart((prevCart) => [...prevCart, item]);
+        const new_cart = [...cart, item];
+        localStorage.setItem('cart', JSON.stringify(new_cart));
+        setCart(new_cart);
     }
 
     const removeFromCart = (uid) => {
-        setCart((prevCart) => prevCart.filter((item) => item.uid !== uid));
+        const new_cart = cart.filter((item) => item.uid !== uid);
+        localStorage.setItem('cart', JSON.stringify(new_cart));
+        setCart(new_cart);
+
     }
 
     const filteredCart = () => {
@@ -98,8 +119,26 @@ export const GlobalProvider = ({ children }) => {
         }
     }, [alertStack]);
 
+
+    useEffect(() => {
+        const _cart = localStorage.getItem('cart');
+        if (_cart) {
+            const __cart = JSON.parse(_cart);
+            console.log("Loading cart from local storage", __cart);
+            if (__cart.length > 0) {
+                cartUID.current = __cart[__cart.length - 1].uid + 1;
+                setCart(__cart);
+            }
+        }
+        const _user = localStorage.getItem('user');
+        if (_user) {
+            const __user = JSON.parse(_user);
+            prsetUser(__user);
+        }
+    }, []);
+
     return (
-        <GlobalContext.Provider value={{ addAlert, closeAlert, getCurrentAlert, loadingText, setLoadingText, setShowLoading, showLoading, showAlert, setShowAlert, cart, removeFromCart, addToCart, user, setUser, filteredCart, user_demo }}>
+        <GlobalContext.Provider value={{ addAlert, closeAlert, getCurrentAlert, loadingText, setLoadingText, setShowLoading, showLoading, showAlert, setShowAlert, cart, removeFromCart, addToCart, user, setUser, filteredCart, user_demo, clearCart }}>
             {children}
             <Modal show={showAlert} data-bs-theme={"dark"}>
                 <Modal.Title> <div

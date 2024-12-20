@@ -8,7 +8,8 @@ import Checkout from './Pages/Checkout/Checkout.jsx'
 import Dashboard from './Pages/Dashboard/Dashboard.jsx'
 import NotFound from './Pages/Notfound/Notfound.jsx'
 import Product from './Pages/Products/Product.jsx'
-
+import About from './Pages/About/About.jsx'
+import Thankyou from './Pages/Thankyou/Thankyou.jsx'
 
 const router = createBrowserRouter([
   {
@@ -27,8 +28,18 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
   },
   {
-    path: "/products",
+    path: "/product/:id",
     element: <Product/>,
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/about",
+    element: <About/>,
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/thankyou",
+    element: <Thankyou/>,
     errorElement: <NotFound />,
   },
   {

@@ -1,0 +1,54 @@
+.outterdiv{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    scrollbar-width: none;
+    position: absolute;
+    padding: 5px;
+    width: 100%;
+    bottom: 0;
+    justify-content: space-between;
+    max-height: 10vh;
+ 
+}
+
+.divmiddle
+{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.divmiddle p{
+    margin: auto;
+}
+
+
+
+.divleft{
+    display: flex;
+    flex-direction: row;
+    justify-content: bottom;
+    align-items: bottom;
+    justify-items: bottom;
+}
+
+.link{
+    padding: 5px;
+    color: white;
+    font-size: 1.2em;
+}
+
+.divrightinner{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+.divrightinner a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.8em;
+}

@@ -1,13 +1,62 @@
 .outterdiv {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    align-content: center;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 90vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.innerdiv {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-x: scroll;
+    scrollbar-width: none;
     height: 80vh;
     width: 100%;
-    border: 1px solid #0f0;
-    padding: 10px;
+    /* justify-content: center;
+    align-items: center; */
+    margin: auto;
     overflow-y: scroll;
+}
+
+.griddiv {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+    padding: 10px;
+    overflow-y: none;
+    
+}
+
+.loadingdiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    width: 100vw;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.buttondiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadmorebutton{
+    padding: 10px;
+    margin-top: 5px;
+    width: 110px;
+    height: 44px;
+
+}
+
+.insidebutton {
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
 }

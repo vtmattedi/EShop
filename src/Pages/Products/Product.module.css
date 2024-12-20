@@ -1,0 +1,174 @@
+
+
+.outterdiv {
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    width: 100%;
+}
+
+.relatedoutter {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    height: 20vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+}
+.relatedconst
+{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.relatedcard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    padding: 0.1vh;
+    width: 250px;
+    height: 14vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+}
+
+.relatedinner {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+}
+
+.relatedimg {
+    width: 10vh;
+    height: 10vh;
+    object-fit: scale-down;
+    border-radius: 8px;
+}
+
+.relatedtitle {
+    font-size: 0.8em;
+    color: #333;
+    font-family: 'Inter';
+    font-weight: bolder;
+}
+
+.relatedtext {
+    bottom: 0;
+    font-size: 0.8em;
+    font-family: 'Comfortaa', sans-serif;
+    color: #333;
+}
+
+.relatedcard:hover {
+    box-shadow: 0 8px 16px rgb(255, 255, 255);
+    transition: box-shadow 0.5s ease;
+    cursor: pointer;
+}
+
+.relatedbody
+{
+   margin: auto;
+}
+
+.productoutter {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    height: 80vh;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    margin: 10px;
+}
+
+.productimagediv{
+    background: radial-gradient(#ccc,#eee ,#fff);    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    border-radius: 8px;
+    width: 80%;
+    height: 95%;
+}
+
+.productimage {
+    max-width: 40vw;
+    max-height: 40vh;
+    object-fit: scale-down;
+    border-radius: 10px;
+
+}
+
+.productexts
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 80vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    width: 100%;
+    justify-content: space-between;
+}
+.producttitle{
+    font-size: 2em;
+}
+.productprice
+{
+    font-size: 1.5em;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    max-width: fit-content;
+}
+.addbuttondiv
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+
+
+}
+.addbutton{
+    padding: 10px;
+    width: 180px;
+    font-weight: bold;
+    height: 44px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.productextsinner
+{
+    max-height: 60vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.loading{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 100vw;
+}

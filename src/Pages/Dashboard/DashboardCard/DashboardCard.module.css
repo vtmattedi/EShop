@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300');
+
 .card {
     background-color: #fff;
     border-radius: 8px;
@@ -8,7 +9,16 @@
     transition: box-shadow 0.3s ease;
     width: 20vw;
     height: 40vh;
+    align-items: center;
+    
 
+}
+.cardbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
 }
 
 .card:hover {
@@ -22,17 +32,21 @@
 .cardtitle {
     font-size: 1.2em;
     color: #333;
-    font-family: 'Comfortaa', sans-serif;
+    font-family: 'Inter';
     font-weight: bolder;
 }
 
 .cardcontent {
-    font-size: 1em;
+    bottom: 0;
+    font-size: 1.2em;
+    font-family: 'Comfortaa', sans-serif;
     color: #333;
 }
 
 .cardimg {
+
     width: 10vw;
-    height: 15vw;
+    height: 10vw;
     border-radius: 8px;
+
 }
