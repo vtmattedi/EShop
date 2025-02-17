@@ -9,7 +9,7 @@ import styles from './Header.module.css';
 import logo from '../assets/logo-inverted.png';
 import LoginForm from '../LoginForm/LoginForm';
 import { useNavigate } from 'react-router-dom';
-
+import profile from '../assets/noprofile.svg';
 const Header = () => {
     const [show, setShow] = useState(false);
 
@@ -56,7 +56,8 @@ const Header = () => {
 
 
             </div>
-            <div >
+            <div className={styles.profilecontainer}>
+                {user && <img src={profile} className={styles.profileimage} />}
                 <Button variant="outline" className={styles.loginbutton}
                     onClick={() => setOpenLogin(true)}
                 >{"" + getUserName()}</Button>

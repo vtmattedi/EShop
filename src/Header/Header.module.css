@@ -103,3 +103,19 @@
     width: 80%;
     margin: 10px;
 }
+
+.profilecontainer
+{
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileimage
+{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
