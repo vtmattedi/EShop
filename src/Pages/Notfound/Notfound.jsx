@@ -1,5 +1,5 @@
 
-import Logo from '../../assets/Logo2.svg';
+import Logo from '../../assets/logo2.svg';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 const NotFound = () => {
