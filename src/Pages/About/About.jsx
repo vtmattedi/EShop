@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './About.module.css';
 import logo from '../../assets/logo-inverted.png';
 import Header from '../../Header/Header';
-
+// I hate case sensitiveness
 function About() {
     return (
         <>
