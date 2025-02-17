@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert, Button, NavLink, Spinner } from 'react-bootstrap';
+import { Alert, Button, NavLink, Spinner, Tooltip } from 'react-bootstrap';
 import { useState } from 'react';
 import { useGlobalContext } from '../../GlobalContext';
 import CheckoutCard from './CheckoutCard/CheckoutCard';
@@ -9,6 +9,7 @@ import LoadIndicator from '../../Loadindicator';
 import Header from '../../Header/Header';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
+import { OverlayTrigger } from 'react-bootstrap'
 const Checkout = () => {
     const [step, setStep] = useState(0);
     const { cart, clearCart, user, addAlert } = useGlobalContext();
@@ -22,6 +23,7 @@ const Checkout = () => {
     const [enableNext, setEnableNext] = useState(true);
     const [processingPayment, setProcessPayment] = useState(false);
     const steps = ['Review Order', 'Delivery Address', 'Shipping', 'Payment'];
+    const paymentMethods = ['Credit Card', 'Debit Card', 'Wire', 'Bitcoin'];
     const axios = useAxios();
     const navigator = useNavigate();
     const handleZipCode = (e) => {
@@ -195,7 +197,6 @@ const Checkout = () => {
         }
     }, [user]);
 
-
     useEffect(() => {
         let price = [];
         let etd = [];
@@ -215,6 +216,39 @@ const Checkout = () => {
         setShipment(_shipment);
 
     }, [region]);
+
+
+    const renderTooltip = (props) => (
+
+        <Tooltip id="button-tooltip" {...props}>
+            This needs to be a valid brazilian zip code.
+            Try out 70150-900.
+        </Tooltip>
+    );
+    const nextTooltipText = () => {
+        switch (step) {
+            case 0:
+                return "";
+            case 1:
+                return "Enter a valid Zip code and click to search the address.";
+            case 2:
+                return "Select a valid shipping method.";
+            case 3:
+                return "Select a valid payment method.";
+            default:
+                return "";
+        }
+
+    }
+    const nextButtonTooltip = (props) => (
+        !enableNext ?
+            <Tooltip id="button-tooltip" {...props}>
+                {nextTooltipText()}
+            </Tooltip> :
+            <></>
+
+    );
+
 
     return (<>
         <Header />
@@ -241,7 +275,15 @@ const Checkout = () => {
                     }
 
                 </div>
+                {/*Steps:
+                        0: Review Order	
+                        1: Delivery Address
+                        2: Shipping
+                        3: Payment
+                        4: Confirmation
+                */}
                 {
+                    //Review Order
                     step == 0 &&
 
                     <div className={styles.cartcontainer}>
@@ -272,6 +314,7 @@ const Checkout = () => {
                     </div>
                 }
                 {
+                    // Delivery Address
                     step == 1 &&
                     <div className={styles.deliverydiv}>
                         <div className="bi bi-geo-alt" style={{ fontSize: "5em" }}></div>
@@ -291,12 +334,19 @@ const Checkout = () => {
                             <p className={styles.addrname} >Neighbourhood: </p>
                             <p className={styles.addrval}>{address?.neighborhood}</p>
                         </div>
-                        <div className={styles.zipdiv}>
-                            <input type='text' placeholder='Zip Code'
-                                onKeyDown={handleZipCode}
-                                onChange={()=>{}}
-                                value={zip}
-                                style={{ textAlign: 'center' }} />
+
+                        <div className={styles.zipdiv} id='zipdiv'>
+                            <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={renderTooltip}
+                            >
+                                <input type='text' placeholder='Zip Code'
+                                    onKeyDown={handleZipCode}
+                                    onChange={() => { }}
+                                    value={zip}
+                                    style={{ textAlign: 'center' }} />
+                            </OverlayTrigger>
                             <Button
                                 className={styles.findbutton}
                                 onClick={getAddressFromZip}
@@ -314,9 +364,14 @@ const Checkout = () => {
                                 }
                             </Button>
                         </div>
+
+
+
+
                     </div>
                 }
                 {
+                    /*Shipment */
                     step == 2 &&
                     <div>
                         <div className="bi bi-airplane" style={{ fontSize: "5em" }}></div>
@@ -327,31 +382,38 @@ const Checkout = () => {
                             Please select the shippment method:
                         </div>
                         <div className={styles.shipmentcontainer}>
-                            {shipment.map((option, index) => (
-                                <div key={index} className={styles.shipmentoption}>
-                                    <div className={styles.shipmentinnerdiv}>
-                                        <input
-                                            type="radio"
-                                            id={`shipment-${index}`}
-                                            name="shipment"
-                                            value={option.service}
-                                            onChange={() => {
-                                                setShipping(option.price)
+                            <Form>
+                                {
+                                    shipment.map((option, index) => {
+                                        const _id = `shipment-${index}`;
+                                        return <div key={index} className={styles.shipmentoption}>
+                                            <div className={styles.shipmentinnerdiv}
+                                            onClick={() => {
+                                                document.getElementById(_id).checked = true;
                                                 setEnableNext(true);
+                                                setShipping(option.price)
                                             }}
-                                        />
-                                        <p className={styles.shipmentservice}>{option.service}</p>
-                                    </div>
-                                    <p>${option.price.toFixed(2)}</p>
-                                    <p>{option.etd} {option.etd > 1 ? " days" : "day"}</p>
-                                </div>
-                            ))}
+                                        >
+                                            <Form.Check // prettier-ignore
+                                                type="radio"
+                                                name="group2"
+                                                id={_id}
+                                                onClick={() => { setEnableNext(true) }}
+                                            />
+                                            <p className={styles.shipmentservice}>{option.service}</p>
+                                            </div>
+                                            <p>${option.price.toFixed(2)}</p>
+                                            <p>{option.etd} {option.etd > 1 ? " days" : "day"}</p>
+                                        </div>
+                                    })
+                                }
+
+                            </Form>
                         </div>
-
-
                     </div>
                 }
                 {
+                    //Payment
                     step == 3 &&
                     <div>
                         <div className="bi bi-credit-card" style={{ fontSize: "5em" }}></div>
@@ -359,43 +421,25 @@ const Checkout = () => {
                         <p>Please Select the Payment Method</p>
                         <div className={styles.paymentcontainer}>
                             <Form>
-                                <div className={styles.paymentoption}>
-                                    <Form.Check // prettier-ignore
-                                        type="radio"
-                                        name="group1"
-                                        id="card_credit"
-                                        onClick={() => { setEnableNext(true) }}
-                                    />
-                                    <p>Credit Card</p>
-                                </div>
-                                <div className={styles.paymentoption}>
-                                    <Form.Check // prettier-ignore
-                                        type="radio"
-                                        id="card_debit"
-                                        name="group1"
-                                        onClick={() => { setEnableNext(true) }}
-                                    />
-                                    <p>Debit Card</p>
-                                </div>
-                                <div className={styles.paymentoption}>
-                                    <Form.Check
-                                        type="radio"
-                                        name="group1"
-                                        id="wire"
-                                        onClick={() => { setEnableNext(true) }}
-                                    />
-                                    <p>Wire</p>
-                                </div>
+                                {
+                                    paymentMethods.map((method, index) => {
+                                        const _id = method.replace(' ', '_').toLowerCase();
+                                        return <div key={index} className={styles.paymentoption}
+                                            onClick={() => {
+                                                setEnableNext(true);
+                                                document.getElementById(_id).checked = true;
+                                            }}>
+                                            <Form.Check // prettier-ignore
+                                                type="radio"
+                                                name="group1"
+                                                id={_id}
+                                                onClick={() => { setEnableNext(true) }}
+                                            />
+                                            <p>{method}</p>
+                                        </div>
+                                    })
+                                }
 
-                                <div className={styles.paymentoption}>
-                                    <Form.Check
-                                        type="radio"
-                                        name="group1"
-                                        id="bitcoin"
-                                        onClick={() => { setEnableNext(true) }}
-                                    />
-                                    <p>Bitcoin</p>
-                                </div>
                             </Form>
                         </div>
 
@@ -414,31 +458,39 @@ const Checkout = () => {
                         </p>
                     </div>
                 }
-                <Button onClick={() => {
-                    if (step < steps.length - 1)
-                        setStep((prev) => prev + 1);
-                    else {
-                        setProcessPayment(true);
-                        setTimeout(() => {
-                            navigator('/thankyou');
-                            clearCart();
-                            setProcessPayment(false);
-                        }, 1500);
-                    }
-                }}
-                    className={`${styles.nextbutton} ${step < steps.length - 1 ? '' : styles.lastbutton}`}
-                    disabled={!enableNext}
+                <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={nextButtonTooltip}
                 >
-                    {
-                        step < steps.length - 1 ?
-                            <div className={styles.buttontext}> Next <div className='bi bi-arrow-right'></div></div> :
-                            processingPayment ?
-                                <div className={styles.buttontext}>{LoadIndicator()} </div> :
-                                <div className={styles.buttontext}> Pay </div>
+                    <div>
+                        <Button onClick={() => {
+                            if (step < steps.length - 1)
+                                setStep((prev) => prev + 1);
+                            else {
+                                setProcessPayment(true);
+                                setTimeout(() => {
+                                    navigator('/thankyou');
+                                    clearCart();
+                                    setProcessPayment(false);
+                                }, 1500);
+                            }
+                        }}
+                            className={`${styles.nextbutton} ${step < steps.length - 1 ? '' : styles.lastbutton}`}
+                            disabled={!enableNext}
+                        >
+                            {
+                                step < steps.length - 1 ?
+                                    <div className={styles.buttontext}> Next <div className='bi bi-arrow-right'></div></div> :
+                                    processingPayment ?
+                                        <div className={styles.buttontext}>{LoadIndicator()} </div> :
+                                        <div className={styles.buttontext}> Pay </div>
 
 
-                    }
-                </Button>
+                            }
+                        </Button>
+                    </div>
+                </OverlayTrigger>
             </div >
         </div >
     </>

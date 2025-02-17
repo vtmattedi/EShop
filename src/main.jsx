@@ -11,6 +11,7 @@ import Product from './Pages/Products/Product.jsx'
 import About from './Pages/About/About.jsx'
 import Thankyou from './Pages/Thankyou/Thankyou.jsx'
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: < Checkout />,
-    errorElement: <NotFound />,
+    // errorElement: <NotFound />,
   },
   {
     path: "/dashboard",
