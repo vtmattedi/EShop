@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './About.module.css';
 import logo from '../../assets/logo-inverted.png';
-import Header from '../../Header/header';
+import Header from '../../Header/Header';
 
 function About() {
     return (
