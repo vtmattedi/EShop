@@ -241,7 +241,7 @@ const Checkout = () => {
 
     }
     const nextButtonTooltip = (props) => (
-        !enableNext ?
+        nextTooltipText() && !enableNext ?
             <Tooltip id="button-tooltip" {...props}>
                 {nextTooltipText()}
             </Tooltip> :
@@ -338,7 +338,7 @@ const Checkout = () => {
                         <div className={styles.zipdiv} id='zipdiv'>
                             <OverlayTrigger
                                 placement="top"
-                                delay={{ show: 250, hide: 400 }}
+                                delay={{ show: 500, hide: 400 }}
                                 overlay={renderTooltip}
                             >
                                 <input type='text' placeholder='Zip Code'
@@ -460,7 +460,7 @@ const Checkout = () => {
                 }
                 <OverlayTrigger
                     placement="top"
-                    delay={{ show: 250, hide: 400 }}
+                    delay={{ show: 1000, hide: 500 }}
                     overlay={nextButtonTooltip}
                 >
                     <div>

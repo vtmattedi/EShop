@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useAxios } from '../axiosHook';
-import { Button, Image, Modal } from 'react-bootstrap';
+import { Button, Image, Modal, Tooltip } from 'react-bootstrap';
 import { useGlobalContext } from '../GlobalContext';
 import profile from '../assets/noprofile.svg';
 import logo from '../assets/logo-inverted.png';
 import LoadIndicator from '../Loadindicator';
 import styles from './LoginForm.module.css';
+import { OverlayTrigger } from 'react-bootstrap'
 
 const LoginForm = ({ visibile, handleClose }) => {
     const [username, setUsername] = useState('');
@@ -51,6 +52,12 @@ const LoginForm = ({ visibile, handleClose }) => {
                 handleClose();
             });
     }
+    const logintooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            You can use any user from the <a href='https://fakestoreapi.com/docs#u-all'
+            target='_blank'>API</a>.
+        </Tooltip>
+    );
 
     const setSelected = (id) => {
         const _user = userList.find(user => user.id == id);
@@ -107,29 +114,35 @@ const LoginForm = ({ visibile, handleClose }) => {
                                 required
                             />
                         </div>
-                        <div className={styles.selectdiv}>
-                            <select className="form-select" aria-label="Default select example" onChange={(e) => setSelected(e.target.value)}
-                            >
-                                <option selected>Available Users</option>
-                                {userList.map((user) => {
-                                    {
-                                        return (
-                                            <option value={user.id} key={user.id}>{"" + getFullUserName(user)}</option>
-                                        )
+                        <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={logintooltip}
+                        >
+                            <div className={styles.selectdiv}>
+                                <select className="form-select" aria-label="Default select example" onChange={(e) => setSelected(e.target.value)}
+                                >
+                                    <option selected>Available Users</option>
+                                    {userList.map((user) => {
+                                        {
+                                            return (
+                                                <option value={user.id} key={user.id}>{"" + getFullUserName(user)}</option>
+                                            )
+                                        }
+                                    })
                                     }
-                                })
-                                }
 
-                            </select>
-                        </div>
+                                </select>
+                            </div>
+                        </OverlayTrigger>
                         <Button type="submit"
                             className={styles.loginbutton}
                             disabled={loading}>
                             <div className={styles.insidebutton}>
                                 {
                                     loading ? LoadIndicator() : "Login"
-                                    }
-                                    </div>
+                                }
+                            </div>
                         </Button>
                     </form>
                 </div>
