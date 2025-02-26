@@ -24,38 +24,47 @@ const LoginForm = ({ visibile, handleClose }) => {
 
     const logIn = (username, password) => {
         setLoading(true);
-        setTimeout(() => {
-            const _user = userList.find(user => user.username == username && user.password == password);
-            if (_user) {
-                setUser(_user);
-                handleClose();
-            }
-            else {
-                addAlert({ text: "Invalid username or password", title: "Login Failed" });
-            }
-            setLoading(false);
-        }, 1500);
-        return;
         const body = JSON.stringify({ username, password });
         axios.post('https://fakestoreapi.com/auth/login', body)
             .then((response) => {
-                console.log(response.data);
-                setUser(response.data);
-                setLoading(false);
-                handleClose();
+                console.log(response);
+                const token = response.data.token;
+                axios.get('https://fakestoreapi.com/users',
+                    {
+                        headers: { Authorization: `Bearer ${token}` }
+                    }
+                ).then((response) => {
+                        console.log(response);
+                        const users = response.data;
+                        const parsed_user = users.find((user) => {
+                            return user.username === username;
+                        });
+                        if (parsed_user) {
+                            setUser(parsed_user);
+                        }
+                        else{
+                            addAlert({ text: "Auth Server Failed!", title: 'Login Failed' });
+                        }
+                        setLoading(false);
+
+                    })
+                    .catch((error) => {
+                        addAlert({ text: "Server Error: " + error.message, title: 'Login Failed' });
+                        setLoading(false);
+                    })
             })
             .catch((error) => {
                 console.error(error);
+                addAlert({ text: "Invalid User and/or password.", title: 'Login Failed' });
                 setLoading(false);
-            }).finally(() => {
-                setLoading(false);
-                handleClose();
-            });
+            })
+        return;
+        
     }
     const logintooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
             You can use any user from the <a href='https://fakestoreapi.com/docs#u-all'
-            target='_blank'>API</a>.
+                target='_blank'>API</a>.
         </Tooltip>
     );
 
