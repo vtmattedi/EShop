@@ -128,8 +128,8 @@ const LoginForm = ({ visibile, handleClose }) => {
                             <div className={styles.insidebutton}>
                                 {
                                     loading ? LoadIndicator() : "Login"
-                                    }
-                                    </div>
+                                }
+                            </div>
                         </Button>
                     </form>
                 </div>
@@ -154,23 +154,24 @@ const LoginForm = ({ visibile, handleClose }) => {
                     </div>
 
 
+                    <div className='d-flex justify-content-center align-items-center'>
+                        <Button onClick={() => {
+                            setLoading(true);
+                            setTimeout(() => {
+                                setUser(null);
+                                setLoading(false);
+                            }, 1500);
+                        }}
+                            className={styles.logoutbutton}
+                            disabled={loading}
+                            variant='danger'>
+                            <div className={styles.insidebutton}>
 
-                    <Button onClick={() => {
-                        setLoading(true);
-                        setTimeout(() => {
-                            setUser(null);
-                            setLoading(false);
-                        }, 1500);
-                    }}
-                        className={styles.logoutbutton}
-                        disabled={loading}
-                        variant='danger'>
-                        <div className={styles.insidebutton}>
+                                {loading ? LoadIndicator() : "Logout"}
 
-                            {loading ? LoadIndicator() : "Logout"}
-
-                        </div>
-                    </Button>
+                            </div>
+                        </Button>
+                    </div>
                 </div>
             }
             <Button variant="secondary"
