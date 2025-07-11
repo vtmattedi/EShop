@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useAxios } from '../axiosHook';
-import { Button, Image, Modal } from 'react-bootstrap';
+import { Button, Image, Modal, Tooltip } from 'react-bootstrap';
 import { useGlobalContext } from '../GlobalContext';
 import profile from '../assets/noprofile.svg';
 import logo from '../assets/logo-inverted.png';
 import LoadIndicator from '../Loadindicator';
 import styles from './LoginForm.module.css';
+import { OverlayTrigger } from 'react-bootstrap'
 
 const LoginForm = ({ visibile, handleClose }) => {
     const [username, setUsername] = useState('');
@@ -23,34 +24,49 @@ const LoginForm = ({ visibile, handleClose }) => {
 
     const logIn = (username, password) => {
         setLoading(true);
-        setTimeout(() => {
-            const _user = userList.find(user => user.username == username && user.password == password);
-            if (_user) {
-                setUser(_user);
-                handleClose();
-            }
-            else {
-                addAlert({ text: "Invalid username or password", title: "Login Failed" });
-            }
-            setLoading(false);
-        }, 1500);
-        return;
         const body = JSON.stringify({ username, password });
         axios.post('https://fakestoreapi.com/auth/login', body)
             .then((response) => {
-                console.log(response.data);
-                setUser(response.data);
-                setLoading(false);
-                handleClose();
+                console.log(response);
+                const token = response.data.token;
+                axios.get('https://fakestoreapi.com/users',
+                    {
+                        headers: { Authorization: `Bearer ${token}` }
+                    }
+                ).then((response) => {
+                        console.log(response);
+                        const users = response.data;
+                        const parsed_user = users.find((user) => {
+                            return user.username === username;
+                        });
+                        if (parsed_user) {
+                            setUser(parsed_user);
+                        }
+                        else{
+                            addAlert({ text: "Auth Server Failed!", title: 'Login Failed' });
+                        }
+                        setLoading(false);
+
+                    })
+                    .catch((error) => {
+                        addAlert({ text: "Server Error: " + error.message, title: 'Login Failed' });
+                        setLoading(false);
+                    })
             })
             .catch((error) => {
                 console.error(error);
+                addAlert({ text: "Invalid User and/or password.", title: 'Login Failed' });
                 setLoading(false);
-            }).finally(() => {
-                setLoading(false);
-                handleClose();
-            });
+            })
+        return;
+        
     }
+    const logintooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            You can use any user from the <a href='https://fakestoreapi.com/docs#u-all'
+                target='_blank'>API</a>.
+        </Tooltip>
+    );
 
     const setSelected = (id) => {
         const _user = userList.find(user => user.id == id);
@@ -107,21 +123,27 @@ const LoginForm = ({ visibile, handleClose }) => {
                                 required
                             />
                         </div>
-                        <div className={styles.selectdiv}>
-                            <select className="form-select" aria-label="Default select example" onChange={(e) => setSelected(e.target.value)}
-                            >
-                                <option selected>Available Users</option>
-                                {userList.map((user) => {
-                                    {
-                                        return (
-                                            <option value={user.id} key={user.id}>{"" + getFullUserName(user)}</option>
-                                        )
+                        <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={logintooltip}
+                        >
+                            <div className={styles.selectdiv}>
+                                <select className="form-select" aria-label="Default select example" onChange={(e) => setSelected(e.target.value)}
+                                >
+                                    <option selected>Available Users</option>
+                                    {userList.map((user) => {
+                                        {
+                                            return (
+                                                <option value={user.id} key={user.id}>{"" + getFullUserName(user)}</option>
+                                            )
+                                        }
+                                    })
                                     }
-                                })
-                                }
 
-                            </select>
-                        </div>
+                                </select>
+                            </div>
+                        </OverlayTrigger>
                         <Button type="submit"
                             className={styles.loginbutton}
                             disabled={loading}>

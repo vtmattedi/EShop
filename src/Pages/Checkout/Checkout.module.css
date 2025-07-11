@@ -81,6 +81,10 @@
     align-items: center;
     text-align: center;
 }
+.shipmentinnerdiv:hover
+{ 
+    cursor: pointer;
+}
 .shipmentservice
 {
     margin : auto;
@@ -105,7 +109,6 @@
 .zipdiv{
     display: flex;
     flex-direction: row;
-    border: 1px solid gray;
     align-items: center;
     justify-items: center;
     gap: 4px;

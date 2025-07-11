@@ -1,12 +1,6 @@
-# React + Vite
+# E-Commerce website example.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a web commerce example using react and bootstrap.
+Available [here](mattediworks-shop.com.br)
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-
-
-* size  checkout
+This consumes this [fake api](https://fakestoreapi.com/) for the products, prices and users. Since there is no way to identfy the user using the API, to login, we try to use the auth API and if succesfull we querry the api for all users to find the current user's data.
