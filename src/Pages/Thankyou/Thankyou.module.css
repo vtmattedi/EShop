@@ -1,11 +1,10 @@
 .outerdiv {
-    display: flex;
-    flex-direction: column;
     margin: auto;
     height: 100%;
     width: 100%;
-    justify-items: center;
+    justify-items: flex-start;
     align-items: center;
+    min-height: 80vh;
 }
 
 .logo {
@@ -22,4 +21,21 @@
 .check{
     font-size: 4em;
     color: green;
+}
+.innerdiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+@media screen and (max-width: 800px) {
+    .logo {
+        height: 40vw;
+    }
+    .text {
+        font-size: 1.2em;
+        max-width: 90vw;
+    }
+    
 }

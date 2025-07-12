@@ -19,3 +19,15 @@
     text-align: justify;
     text-indent: 30px;
 }
+
+@media screen and (max-width: 768px) {
+    .text {
+        font-size: 1em;
+        max-width: 90vw;
+    }
+    .logo {
+        height: 40vw;
+        margin-top: 1em;
+    }
+    
+}

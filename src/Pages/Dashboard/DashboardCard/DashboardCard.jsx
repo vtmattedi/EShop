@@ -20,19 +20,40 @@ const test = {
 
 const DashboardCard = ({ item }) => {
     const {addToCart, cart} = useGlobalContext();
+    const [maxText, setMaxText] = React.useState(23)
     const maxTitle = (title) =>{
-        if(title.length > 23){
-          return title.slice(0,20) + '...'
+        if(title.length > maxText){
+          return title.slice(0,maxText - 3) + '...'
         }
         return title
       }
       const navigator = useNavigate();
+    
+      useEffect(() => {
+              const handleResize = () => {
+                  if (window.innerWidth < 800) {
+                      setMaxText(50);
+                  } else {
+                      setMaxText(23);
+                  }
+              }
+      
+              window.addEventListener('resize', handleResize);
+              handleResize();
+      
+              return () => {
+                  window.removeEventListener('resize', handleResize);
+              };
+          }, []);
  
     return (
         <Card className={styles.card} onClick={() => {
             navigator('/product/' + item.id);
         }}>
+            <div className={styles.cardContainer}>
+
             <Card.Img variant="top" src={item.image} className={styles.cardimg}/>
+            </div>
             <Card.Body className={styles.cardbody}>
                 <Card.Title className={styles.cardtitle}>{maxTitle(item.title)}</Card.Title>
                 <Card.Text className={styles.cardcontent}>

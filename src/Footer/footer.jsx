@@ -3,7 +3,9 @@ import styles from './footer.module.css';
 
 const Footer = () => {
     return (
-
+        <>
+        {/* <div className={styles.placeholder}>
+        </div> */}
         <div className={styles.outterdiv}>
             <div className={styles.divleft}>
                 <a
@@ -29,7 +31,7 @@ const Footer = () => {
             </div>
 
         </div>
-
+        </>
     );
 };
 

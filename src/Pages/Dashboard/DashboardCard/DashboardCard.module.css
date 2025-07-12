@@ -10,9 +10,11 @@
     width: 20vw;
     height: 40vh;
     align-items: center;
-    
+
 
 }
+
+
 .cardbody {
     display: flex;
     flex-direction: column;
@@ -47,6 +49,33 @@
 
     width: 10vw;
     height: 10vw;
-    border-radius: 8px;
+
+}
+
+
+
+
+
+
+@media screen and (max-width: 800px) {
+    .card {
+        width: 90vw;
+    }
+
+    .cardimg {
+        width: 20vw;
+        height: 20vw;
+    }
+
+    .cardcontent {
+        font-size: 1.5em;
+    }
+
+    .cardContainer {
+        border: 3px solid #e4d2d2;
+        padding: 1.5em;
+        border-radius: 50%;
+        box-shadow: 0px 0px 10px 10px #e4d2d2;
+    }
 
 }
